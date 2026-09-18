@@ -1,0 +1,4 @@
+[libraries]
+crypto.add_source_files(ROOT / "rtl" / "**" / "*.vhd")
+tb.add_source_files(ROOT / "tb" / "**" / "*.vhd")
+vunit_lib.files = ['.venv/lib/python3*/site-packages/vunit/vhdl/**/*.vhd']

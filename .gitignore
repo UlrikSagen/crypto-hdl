@@ -1,0 +1,3 @@
+.venv/
+vunit_out/
+__pycache__/
