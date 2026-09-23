@@ -3,7 +3,7 @@ use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
 entity counter is
-  generic (WIDTH : positive := 16);
+  generic (WIDTH : positive := 8);
   port (
     clk    : in  std_logic;
     rst    : in  std_logic;

@@ -12,7 +12,7 @@ entity tb_counter is
 end entity;
 
 architecture tb of tb_counter is
-  constant WIDTH      : positive := 16;
+  constant WIDTH      : positive := 8;
   constant CLK_PERIOD : time     := 10 ns;
 
   signal clk    : std_logic := '0';
