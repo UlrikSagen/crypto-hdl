@@ -1,8 +1,5 @@
 
-
-#Constants declaration
-
-#Array or rounds constants
+#Array of rounds constants
 K = [
 0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5,
 0xd807aa98, 0x12835b01, 0x243185be, 0x550c7dc3, 0x72be5d74, 0x80deb1fe, 0x9bdc06a7, 0xc19bf174,
@@ -50,7 +47,7 @@ def generate_hash(input_message, trace = False):
     for message_block in blocks:
         w = [0] * 64
 
-        #Device each block in to 32 bit words
+        #Devide each block in to 32 bit words
         for i in range(16):
             w[i] = int.from_bytes(message_block[i*4:(i+1)*4], 'big')
 
