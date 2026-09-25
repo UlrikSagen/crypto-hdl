@@ -22,12 +22,8 @@ def generate_hash(input_message, trace = False):
         )
 
     #Padding
-    length = len(message) * 8
-    message.append(0x80)
-    while(len(message) * 8 + 64) % 512 != 0:
-        message.append(0x00)
 
-    message += length.to_bytes(8, 'big')
+    message = pad(message)
 
     #Process message into 512-bit(64 bytes) chunks
     blocks = []
@@ -123,3 +119,13 @@ def maj(x, y, z):
 
 def rotate(num, shift):
     return (((num >> shift) | (num << (32 - shift))) & 0xFFFFFFFF)
+
+def pad(input_message):
+    message = bytearray(input_message)
+    length = len(message) * 8
+    message.append(0x80)
+    while(len(message) * 8 + 64) % 512 != 0:
+        message.append(0x00)
+
+    message += length.to_bytes(8, 'big')
+    return message;
