@@ -5,6 +5,8 @@ use ieee.numeric_std.all;
 package sha256_pkg is
     type k_array_t is array (0 to 63) of unsigned(31 downto 0);
     constant K : k_array_t;
+    type h_array_t is array(0 to 7) of unsigned(31 downto 0);
+    constant H_INIT : h_array_t;
     function ch(x, y, z : unsigned(31 downto 0)) return unsigned;
     function maj(x, y, z : unsigned(31 downto 0)) return unsigned;
     function sigma0(x : unsigned(31 downto 0)) return unsigned;
@@ -25,6 +27,17 @@ package body sha256_pkg is
         x"a2bfe8a1", x"a81a664b", x"c24b8b70", x"c76c51a3", x"d192e819", x"d6990624", x"f40e3585", x"106aa070",
         x"19a4c116", x"1e376c08", x"2748774c", x"34b0bcb5", x"391c0cb3", x"4ed8aa4a", x"5b9cca4f", x"682e6ff3",
         x"748f82ee", x"78a5636f", x"84c87814", x"8cc70208", x"90befffa", x"a4506ceb", x"bef9a3f7", x"c67178f2"
+        );
+
+    constant H_INIT : h_array_t := (
+        x"6a09e667",
+        x"bb67ae85",
+        x"3c6ef372",
+        x"a54ff53a",
+        x"510e527f",
+        x"9b05688c",
+        x"1f83d9ab",
+        x"5be0cd19"
         );
 
     function ch(x, y, z : unsigned(31 downto 0)) return unsigned is
