@@ -1,6 +1,8 @@
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
+use std.textio.all;
+
 
 
 library vunit_lib;
@@ -10,12 +12,20 @@ library crypto;
 use crypto.sha256_pkg.all;
 
 entity tb_sha256_pkg is
-    generic (runner_cfg : string);
+    generic (
+        runner_cfg : string;
+        vector_file : string
+        );
 end entity;
 
 architecture sim of tb_sha256_pkg is
 begin
     process
+        file f : text;
+        variable l : line;
+        variable x, y, z : unsigned(31 downto 0);
+        variable r7, s0, s1, cs0, cs1, c, m : unsigned(31 downto 0);
+        variable n : natural := 0;
     begin
         test_runner_setup(runner, runner_cfg);
 
@@ -50,6 +60,26 @@ begin
                 check_equal(maj(x"6a09e667", x"bb67ae85", x"3c6ef372"), unsigned'(x"3a6fe667"), "maj");
                 check_equal(maj(x"ffffffff", x"ffffffff", x"3c6ef372"), unsigned'(x"ffffffff"), "maj(to av tre 1)");
                 check_equal(maj(x"00000000", x"00000000", x"ffffffff"), unsigned'(x"00000000"), "maj(to av tre 0)");
+            end if;
+            if run("mot_python_referanse") then
+                file_open(f, vector_file, read_mode);
+                while not endfile(f) loop
+                    readline(f, l);
+                    hread(l, x); hread(l, y); hread(l, z);
+                    hread(l, r7); hread(l, s0);
+                    hread(l, s1); hread(l, cs0); hread(l, cs1);
+                    hread(l, c); hread(l, m);
+                    check_equal(rotr(x, 7),  r7, "rotr");
+                    check_equal(sigma0(x),   s0, "sigma0");
+                    check_equal(sigma1(x),   s1, "sigma1");
+                    check_equal(capsigma0(x), cs0, "capsigma0");
+                    check_equal(capsigma1(x), cs1, "capsigma1");
+                    check_equal(ch(x, y, z), c, "ch");
+                    check_equal(maj(x, y ,z), m, "maj");
+                    n := n + 1;
+                end loop;
+                file_close(f);
+                check(n > 0, "file empty");
             end if;
         end loop;
 
