@@ -1,11 +1,12 @@
-# scripts/gen_sha256_pkg_vectors.py
 import random
 from sha256 import pad, generate_hash
 
 random.seed(42)
+
+lengder = [0, 55, 56, 64, 119, 120] + [random.randint(0, 256) for _ in range(512)]
+
 with open("vectors/sha256_core_vectors.txt", "w") as fh:
-    for _ in range(20):
-        n = random.randint(0, 256)
+    for n in lengder:
         x = random.randbytes(n)
         padded = pad(x)
         digest = generate_hash(x)
