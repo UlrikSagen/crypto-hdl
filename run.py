@@ -14,5 +14,6 @@ tb = vu.add_library("tb")
 tb.add_source_files(ROOT / "tb" / "**" / "*.vhd")
 
 tb.test_bench("tb_sha256_pkg").set_generic("vector_file", str(ROOT / "vectors" / "sha256_pkg_functions.txt"))
+tb.test_bench("tb_sha256_core").set_generic("vector_file", str(ROOT / "vectors" / "sha256_core_vectors.txt"))
 
 vu.main()

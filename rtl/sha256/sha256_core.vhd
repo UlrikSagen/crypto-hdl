@@ -44,6 +44,7 @@ begin
                 done <= '0';
                 busy <= '0';
             else
+                done <= '0';
                 case state is
                     when IDLE =>
                         if start = '1' then
@@ -69,8 +70,8 @@ begin
                         end if;
                     when ROUND =>
                         if t >= 16 then
-                            w(t) <= sigma1(w(t-2)) + w(t-7) + sigma0(w(t-15)) + w(t-16);
                             curr_w := sigma1(w(t-2)) + w(t-7) + sigma0(w(t-15)) + w(t-16);
+                            w(t) <= curr_w;
                         else
                             curr_w := w(t);
                         end if;
