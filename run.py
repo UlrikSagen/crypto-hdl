@@ -15,5 +15,7 @@ tb.add_source_files(ROOT / "tb" / "**" / "*.vhd")
 
 tb.test_bench("tb_sha256_pkg").set_generic("vector_file", str(ROOT / "vectors" / "sha256_pkg_functions.txt"))
 tb.test_bench("tb_sha256_core").set_generic("vector_file", str(ROOT / "vectors" / "sha256_core_vectors.txt"))
+tb.test_bench("tb_sha256_pad").set_generic("vector_input_file", str(ROOT / "vectors" / "sha256_pad_input_vectors.txt"))
+tb.test_bench("tb_sha256_pad").set_generic("vector_output_file", str(ROOT / "vectors" / "sha256_pad_output_vectors.txt"))
 
 vu.main()
