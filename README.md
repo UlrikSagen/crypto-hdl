@@ -49,7 +49,7 @@ python scripts/gen_sha256_pad_vectors.py
 python run.py
 ```
 
-## Veien videre
+## TODO
 
 - [ ] Ende-til-ende-testbenk som kobler `sha256_pad` direkte til `sha256_core`
 - [ ] Toppnivå-wrapper som gjenbrukbar enhet
