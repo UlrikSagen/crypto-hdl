@@ -57,7 +57,3 @@ python run.py
 - [ ] SHA-512-familien
 - [ ] ChaCha20 (RFC 8439)
 - [ ] AES (FIPS 197)
-
-## Hva jeg har lært
-
-Å implementere SHA-256 i maskinvare tvinger fram forståelse som et programvareperspektiv skjuler: Message schedule er en avhengighetskjede som må beregnes underveis, og padding er ikke bare "legg til noen bytes", men en tilstandsmaskin som må bestemme blokkgrenser uten å kjenne meldingens lengde på forhånd. Prosjektet har også vist meg hvor mye av korrekt kryptografi som ligger i kantfellene.
