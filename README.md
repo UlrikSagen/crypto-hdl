@@ -2,14 +2,16 @@
 
 Kryptografiske primitiver implementert fra bunnen av i VHDL, for å forstå algoritmene på registernivå i stedet for å bruke ferdige IP-kjerner.
 
-**Status:** SHA-256 (FIPS 180-4) er fullt implementert og verifisert. SHA-512-familien, ChaCha20 og AES er planlagt.
+**Status:** SHA-256 kjerne og padding(FIPS 180-4) er implementert og verifisert. SHA-256 top og testbenk gjenstår.
+
+SHA-512-familien, ChaCha20 og AES er planlagt.
 
 ## Høydepunkter
 
 - **Strømbasert SHA-256** med AXI-stream-lignende grensesnitt (`tdata/tvalid/tready/tlast/tkeep`), ett 32-bits ord per klokkesykel
 - **Padding som tilstandsmaskin** som håndterer alle kantfellene i FIPS 180-4: tom melding, melding som fyller nøyaktig én blokk, og melding der lengdefeltet ikke får plass i siste blokk
 - **Flerblokks kjeding** (Merkle–Damgård) og on-the-fly message schedule, 65 klokkesykler per blokk
-- **Verifikasjon mot én kilde:** En Python-referansemodell er verifisert mot offisielle NIST CAVP-vektorer, og all VHDL testes mot vektorer generert fra samme modell
+- **Verifikasjon mot én kilde:** En Python-referansemodell er verifisert mot offisielle NIST-vektorer, og all VHDL testes mot vektorer generert fra samme modell
 
 ## Arkitektur
 
@@ -19,10 +21,10 @@ Kryptografiske primitiver implementert fra bunnen av i VHDL, for å forstå algo
 
 | Modul | Rolle |
 |-------|-------|
-| `sha256_pkg` | Konstanter (K, H_INIT) og rene funksjoner (`ch`, `maj`, `sigma`, `rotr`) |
+| `sha256_pkg` | Konstanter (K, H_INIT) og funksjoner (`ch`, `maj`, `sigma`, `rotr`) |
 | `sha256_core` | Kompresjonsfunksjonen: `IDLE → ROUND (64 runder) → FINAL` |
 | `sha256_pad` | Strømbasert padding: `IDLE → PADDING → EMIT → (EXTRA)` |
-| `scripts/sha256.py` | Python-referansemodell, brukt som testorakel |
+| `scripts/sha256.py` | Python-referansemodell |
 
 ## Verifikasjonsmetodikk
 
@@ -52,8 +54,8 @@ python run.py
 ## TODO
 
 - [ ] Ende-til-ende-testbenk som kobler `sha256_pad` direkte til `sha256_core`
-- [ ] Toppnivå-wrapper som gjenbrukbar enhet
-- [ ] Syntese og ressursrapport for en reell FPGA
+- [ ] `sha256_top` implementert
 - [ ] SHA-512-familien
 - [ ] ChaCha20 (RFC 8439)
 - [ ] AES (FIPS 197)
+- [ ] Syntese på FPGA
