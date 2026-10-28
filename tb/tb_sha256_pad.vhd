@@ -55,7 +55,6 @@ begin
         core_busy => core_busy
     );
 
-
     main : process
         file f : text;
         variable l : line;
@@ -107,6 +106,7 @@ begin
 
     begin
         file_open(f, vector_output_file, read_mode);
+
         while not endfile(f) loop
             wait until rising_edge(clk) and start = '1';
             readline(f, l);
@@ -114,6 +114,7 @@ begin
             check_equal(block_out, block_v, "block");
             check_equal(first, first_v, "first");
         end loop;
+            
         file_close(f);
         checker_done <= '1';
         wait;

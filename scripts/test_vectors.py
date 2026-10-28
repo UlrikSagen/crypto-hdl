@@ -1,5 +1,6 @@
-"""Kjorer NIST CAVP (SHAVS) byte-orienterte vektorer mot sha256.generate_hash."""
+"""==============================| AI GENERATED |============================="""
 
+"""Kjorer NIST CAVP (SHAVS) byte-orienterte vektorer mot sha256.generate_hash."""
 import sys
 from pathlib import Path
 

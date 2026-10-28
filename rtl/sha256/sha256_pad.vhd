@@ -12,6 +12,7 @@ entity sha256_pad is
         tready : out std_logic;
         tlast : in std_logic;
         tkeep : in unsigned(3 downto 0);
+        last_block : out std_logic;
 
         block_out : out unsigned(511 downto 0);
         first : out std_logic;
@@ -54,6 +55,8 @@ begin
                 state <= IDLE;
             else
                 start <= '0';
+                last_block <= '0';
+                
                 case state is
 
                     when IDLE =>
@@ -160,7 +163,7 @@ begin
                         end loop;
 
                         block_out <= blk_v;
-                        
+
                         if core_busy = '0' then
                             start <= '1';
                             first <= is_first;
@@ -170,6 +173,7 @@ begin
                                 need_extra <= '0';
                                 state <= EXTRA;
                             elsif msg_done = '1' then
+                                last_block <= '1';
                                 msg_done <= '0';
                                 state <= IDLE;
                             else
